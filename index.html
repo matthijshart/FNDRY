@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FNDRY — Build it right</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>@import url('https://fonts.cdnfonts.com/css/geist-sans');</style>
+<style>
+  :root {
+    --bg: #ffffff;
+    --ink: #0d1117;
+    --mid: #5a6070;
+    --pale: #f4f6f9;
+    --rule: #e4e7ed;
+    --accent: #1a3a5c;
+    --accent-light: #f0f5fa;
+    --accent-mid: rgba(26,58,92,0.08);
+    --green: #1a6b3c;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--rule);
+    padding: 0 56px; height: 62px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .logo {
+    font-family: 'Inter', sans-serif;
+    font-size: 17px; font-weight: 700;
+    color: var(--ink); text-decoration: none;
+    letter-spacing: 4px; text-transform: uppercase;
+    display: flex; flex-direction: column; line-height: 1; gap: 4px;
+  }
+
+  .logo-sub {
+    font-size: 8px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--accent); font-weight: 500;
+  }
+
+  .nav-center {
+    display: flex; gap: 4px;
+  }
+
+  .nav-phase-link {
+    font-size: 13px; color: var(--mid);
+    text-decoration: none; padding: 6px 14px;
+    border-radius: 4px; transition: all 0.15s;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  .nav-phase-link:hover { background: var(--pale); color: var(--ink); }
+
+  .nav-phase-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .dot-1 { background: #2563eb; }
+  .dot-2 { background: #7c3aed; }
+  .dot-3 { background: #059669; }
+
+  .nav-right { display: flex; align-items: center; gap: 16px; }
+
+  .nav-link-plain {
+    font-size: 13px; color: var(--mid);
+    text-decoration: none; transition: color 0.15s;
+  }
+  .nav-link-plain:hover { color: var(--ink); }
+
+  .nav-btn {
+    background: var(--accent); color: #fff;
+    padding: 9px 20px; font-family: 'Inter', sans-serif;
+    font-size: 13px; font-weight: 600;
+    text-decoration: none; transition: opacity 0.15s;
+  }
+  .nav-btn:hover { opacity: 0.85; }
+
+  /* ─── HERO ─── */
+  .hero {
+    padding: 96px 56px 80px;
+    border-bottom: 1px solid var(--rule);
+    position: relative; overflow: hidden;
+  }
+
+  .hero-bg-grid {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(var(--rule) 1px, transparent 1px),
+      linear-gradient(90deg, var(--rule) 1px, transparent 1px);
+    background-size: 48px 48px;
+    opacity: 0.4;
+    mask-image: radial-gradient(ellipse 70% 90% at 60% 40%, black 0%, transparent 70%);
+  }
+
+  .hero-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 420px;
+    gap: 72px; align-items: center;
+    position: relative; z-index: 1;
+  }
+
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 28px;
+    border: 1px solid rgba(26,58,92,0.2);
+    padding: 5px 12px;
+  }
+
+  .hero-tag-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--accent);
+    animation: blink 2s ease-in-out infinite;
+  }
+
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+  h1 {
+    font-family: 'Geist', sans-serif;
+    font-size: clamp(38px, 5vw, 62px);
+    font-weight: 800; line-height: 1.05;
+    letter-spacing: -2px; margin-bottom: 24px;
+  }
+
+  h1 strong { color: var(--accent); font-weight: 800; }
+
+  .hero-sub {
+    font-size: 17px; color: var(--mid);
+    max-width: 460px; line-height: 1.65; margin-bottom: 36px;
+  }
+
+  .hero-actions { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--accent); color: #fff;
+    padding: 14px 28px; font-family: 'Inter', sans-serif;
+    font-size: 14px; font-weight: 600;
+    text-decoration: none; transition: opacity 0.15s; display: inline-block;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+
+  .btn-secondary {
+    font-size: 14px; color: var(--mid); text-decoration: none;
+    transition: color 0.15s; display: flex; align-items: center; gap: 6px;
+  }
+  .btn-secondary:hover { color: var(--ink); }
+
+  /* HERO SIDE — Phase Overview */
+  .hero-phases {
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    overflow: hidden;
+  }
+
+  .hero-phases-header {
+    padding: 16px 20px;
+    background: var(--pale);
+    border-bottom: 1px solid var(--rule);
+    font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--mid);
+  }
+
+  .hero-phase-row {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.15s; cursor: pointer;
+    text-decoration: none; color: inherit;
+  }
+  .hero-phase-row:last-child { border-bottom: none; }
+  .hero-phase-row:hover { background: var(--pale); }
+
+  .phase-icon {
+    width: 32px; height: 32px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; flex-shrink: 0; margin-top: 1px;
+  }
+
+  .phase-icon-1 { background: rgba(37,99,235,0.1); }
+  .phase-icon-2 { background: rgba(124,58,237,0.1); }
+  .phase-icon-3 { background: rgba(5,150,105,0.1); }
+
+  .phase-row-text {}
+  .phase-row-name {
+    font-size: 14px; font-weight: 600;
+    margin-bottom: 2px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .phase-tag {
+    font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 3px; font-weight: 500;
+  }
+
+  .phase-tag-1 { background: rgba(37,99,235,0.1); color: #2563eb; }
+  .phase-tag-2 { background: rgba(124,58,237,0.1); color: #7c3aed; }
+  .phase-tag-3 { background: rgba(5,150,105,0.1); color: #059669; }
+
+  .phase-row-docs { font-size: 12px; color: var(--mid); line-height: 1.5; }
+
+  .phase-price {
+    margin-left: auto; flex-shrink: 0;
+    font-size: 17px; font-weight: 700;
+    color: var(--ink); align-self: center;
+    padding-left: 12px;
+  }
+
+  /* ─── STATS BAR ─── */
+  .stats-bar {
+    border-bottom: 1px solid var(--rule);
+    padding: 24px 56px;
+    display: flex; gap: 56px; flex-wrap: wrap;
+    max-width: 1100px; margin: 0 auto;
+  }
+
+  .stat-item {}
+  .stat-num {
+    font-family: 'Geist', sans-serif;
+    font-size: 28px; font-weight: 700;
+    color: var(--accent); letter-spacing: -1px;
+    display: block;
+  }
+  .stat-label { font-size: 12px; color: var(--mid); }
+
+  /* ─── SECTION SHARED ─── */
+  .section {
+    max-width: 1100px; margin: 0 auto;
+    padding: 88px 56px;
+  }
+
+  .section-eyebrow {
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 12px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-eyebrow::before {
+    content: ''; width: 20px; height: 1px; background: var(--accent);
+  }
+
+  h2 {
+    font-family: 'Geist', sans-serif;
+    font-size: clamp(28px, 3vw, 40px);
+    font-weight: 800; letter-spacing: -1.5px;
+    line-height: 1.1; margin-bottom: 14px;
+  }
+
+  .section-lead {
+    font-size: 17px; color: var(--mid);
+    max-width: 520px; margin-bottom: 56px; line-height: 1.6;
+  }
+
+  /* ─── PHASE SECTIONS ─── */
+  .phase-section {
+    border-top: 1px solid var(--rule);
+  }
+
+  .phase-header {
+    display: grid; grid-template-columns: 1fr auto;
+    align-items: start; gap: 32px;
+    margin-bottom: 40px;
+  }
+
+  .phase-number {
+    font-size: 11px; letter-spacing: 3px;
+    text-transform: uppercase; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 600;
+  }
+  .phase-num-1 { color: #2563eb; }
+  .phase-num-2 { color: #7c3aed; }
+  .phase-num-3 { color: #059669; }
+
+  .phase-number::before {
+    content: ''; width: 16px; height: 1px;
+  }
+  .phase-num-1::before { background: #2563eb; }
+  .phase-num-2::before { background: #7c3aed; }
+  .phase-num-3::before { background: #059669; }
+
+  .phase-price-badge {
+    text-align: right; flex-shrink: 0;
+  }
+  .phase-price-amount {
+    font-family: 'Geist', sans-serif;
+    font-size: 38px; font-weight: 800;
+    letter-spacing: -2px; line-height: 1;
+    color: var(--ink);
+  }
+  .phase-price-note { font-size: 12px; color: var(--mid); margin-top: 4px; }
+
+  /* DOC GRID per phase */
+  .doc-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0; border: 1px solid var(--rule);
+    margin-bottom: 24px;
+  }
+
+  .doc-item {
+    padding: 22px 24px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.15s, border-color 0.15s;
+    cursor: default;
+  }
+
+  .doc-item:nth-child(3n) { border-right: none; }
+  .doc-item:nth-last-child(-n+3):nth-child(3n+1),
+  .doc-item:nth-last-child(-n+3):nth-child(3n+2),
+  .doc-item:nth-last-child(-n+3):nth-child(3n) { border-bottom: none; }
+
+  .doc-item:hover { background: var(--pale); }
+
+  .doc-phase-1:hover { background: rgba(37,99,235,0.04); }
+  .doc-phase-2:hover { background: rgba(124,58,237,0.04); }
+  .doc-phase-3:hover { background: rgba(5,150,105,0.04); }
+
+  .doc-item-name {
+    font-size: 14px; font-weight: 600; margin-bottom: 5px;
+    line-height: 1.3;
+  }
+  .doc-item-desc { font-size: 12px; color: var(--mid); line-height: 1.5; }
+
+  .doc-item-num {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 10px; font-weight: 600; opacity: 0.6;
+  }
+
+  .num-1 { color: #2563eb; }
+  .num-2 { color: #7c3aed; }
+  .num-3 { color: #059669; }
+
+  .phase-cta {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 24px;
+    border: 1px solid var(--rule);
+    background: var(--pale);
+  }
+
+  .phase-cta-text { font-size: 13px; color: var(--mid); }
+  .phase-cta-text strong { color: var(--ink); }
+
+  .phase-btn {
+    padding: 10px 22px; font-family: 'Inter', sans-serif;
+    font-size: 13px; font-weight: 600; text-decoration: none;
+    transition: opacity 0.15s; white-space: nowrap; flex-shrink: 0;
+    color: #fff;
+  }
+  .phase-btn:hover { opacity: 0.85; }
+  .btn-phase-1 { background: #2563eb; }
+  .btn-phase-2 { background: #7c3aed; }
+  .btn-phase-3 { background: #059669; }
+
+  /* ─── PRICING ─── */
+  .pricing-section {
+    background: var(--pale);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .pricing-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; border: 1px solid var(--rule);
+    overflow: hidden;
+  }
+
+  .price-card {
+    background: var(--bg); padding: 40px;
+    border-right: 1px solid var(--rule);
+    position: relative;
+  }
+  .price-card:last-child { border-right: none; }
+
+  .price-card.featured {
+    background: var(--accent);
+    border-right: none;
+  }
+
+  .price-card-label {
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--mid); margin-bottom: 20px; font-weight: 600;
+  }
+  .price-card.featured .price-card-label { color: rgba(255,255,255,0.5); }
+
+  .price-main {
+    font-family: 'Geist', sans-serif;
+    font-size: 56px; font-weight: 800; letter-spacing: -3px;
+    line-height: 1; margin-bottom: 4px; color: var(--ink);
+  }
+  .price-card.featured .price-main { color: #fff; }
+
+  .price-sub {
+    font-size: 13px; color: var(--mid); margin-bottom: 32px;
+    padding-bottom: 32px; border-bottom: 1px solid var(--rule);
+  }
+  .price-card.featured .price-sub { color: rgba(255,255,255,0.55); border-color: rgba(255,255,255,0.15); }
+
+  .price-includes { margin-bottom: 32px; }
+  .price-includes-label {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--mid); margin-bottom: 14px; font-weight: 600;
+  }
+  .price-card.featured .price-includes-label { color: rgba(255,255,255,0.5); }
+
+  .price-phase-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 0; border-bottom: 1px solid var(--rule);
+    font-size: 14px;
+  }
+  .price-phase-row:last-child { border-bottom: none; }
+  .price-card.featured .price-phase-row { border-color: rgba(255,255,255,0.12); color: #fff; }
+
+  .phase-pill {
+    font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 3px; font-weight: 600;
+    flex-shrink: 0;
+  }
+  .pill-1 { background: rgba(37,99,235,0.12); color: #2563eb; }
+  .pill-2 { background: rgba(124,58,237,0.12); color: #7c3aed; }
+  .pill-3 { background: rgba(5,150,105,0.12); color: #059669; }
+  .price-card.featured .pill-1 { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.9); }
+  .price-card.featured .pill-2 { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.9); }
+  .price-card.featured .pill-3 { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.9); }
+
+  .price-phase-name { flex: 1; }
+  .price-phase-amount {
+    font-weight: 700; font-size: 15px; color: var(--ink);
+    white-space: nowrap;
+  }
+  .price-card.featured .price-phase-amount { color: #fff; }
+  .price-phase-amount.strikethrough {
+    text-decoration: line-through; opacity: 0.4; font-weight: 400;
+  }
+
+  .price-saving {
+    background: rgba(26,107,60,0.1); color: var(--green);
+    font-size: 12px; font-weight: 600; padding: 8px 16px;
+    margin: 20px 0; text-align: center;
+    border: 1px solid rgba(26,107,60,0.15);
+  }
+  .price-card.featured .price-saving {
+    background: rgba(255,255,255,0.12);
+    color: #fff; border-color: rgba(255,255,255,0.2);
+  }
+
+  .price-btn {
+    display: block; width: 100%; padding: 14px;
+    font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600;
+    text-align: center; text-decoration: none; transition: opacity 0.15s;
+    border: 1px solid var(--accent); color: var(--accent);
+  }
+  .price-btn:hover { background: var(--accent-light); }
+  .price-card.featured .price-btn {
+    background: #fff; color: var(--accent); border-color: transparent;
+  }
+  .price-card.featured .price-btn:hover { opacity: 0.9; }
+
+  /* ─── ABOUT ─── */
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 0; background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-top: 48px;
+  }
+
+  .about-card {
+    background: var(--bg); padding: 32px;
+  }
+
+  .about-icon {
+    display: block; margin-bottom: 16px; color: var(--mid);
+  }
+
+  .about-title {
+    font-family: 'Geist', sans-serif;
+    font-size: 17px; font-weight: 700;
+    margin-bottom: 10px; letter-spacing: -0.3px;
+  }
+
+  .about-body { font-size: 14px; color: var(--mid); line-height: 1.65; }
+
+  /* ─── FAQ ─── */
+  .faq-list { margin-top: 48px; }
+
+  .faq-item {
+    border-top: 1px solid var(--rule); padding: 24px 0;
+  }
+
+  .faq-q {
+    font-family: 'Geist', sans-serif;
+    font-size: 18px; font-weight: 600;
+    margin-bottom: 10px; letter-spacing: -0.3px;
+    display: flex; justify-content: space-between; gap: 16px;
+    cursor: pointer; line-height: 1.25;
+  }
+
+  .faq-q-icon { color: var(--accent); font-size: 20px; flex-shrink: 0; font-weight: 300; }
+
+  .faq-a { font-size: 14px; color: var(--mid); max-width: 640px; line-height: 1.7; }
+
+  /* ─── CTA ─── */
+  .cta-section {
+    background: var(--accent-light);
+    border-top: 1px solid #d8e4f0;
+    padding: 96px 56px; text-align: center;
+  }
+
+  .cta-section h2 { max-width: 540px; margin: 0 auto 12px; }
+  .cta-section h2 strong { color: var(--accent); }
+
+  .cta-sub {
+    font-size: 17px; color: var(--mid); margin-bottom: 40px;
+  }
+
+  .cta-options {
+    display: flex; align-items: center; justify-content: center;
+    gap: 12px; flex-wrap: wrap;
+  }
+
+  .cta-btn-main {
+    background: var(--accent); color: #fff;
+    padding: 15px 32px; font-family: 'Inter', sans-serif;
+    font-size: 15px; font-weight: 600; text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .cta-btn-main:hover { opacity: 0.85; }
+
+  .cta-btn-ghost {
+    border: 1px solid var(--accent); color: var(--accent);
+    padding: 15px 28px; font-family: 'Inter', sans-serif;
+    font-size: 15px; font-weight: 500; text-decoration: none;
+    transition: background 0.15s;
+  }
+  .cta-btn-ghost:hover { background: var(--bg); }
+
+  .cta-note { font-size: 13px; color: var(--mid); margin-top: 20px; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 32px 56px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 13px; color: var(--mid);
+    flex-wrap: wrap; gap: 16px;
+  }
+
+  .footer-links { display: flex; gap: 24px; }
+  footer a { color: var(--mid); text-decoration: none; }
+  footer a:hover { color: var(--ink); }
+
+  .footer-disclaimer {
+    width: 100%; padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    font-size: 12px; color: #aaa; line-height: 1.6;
+  }
+
+  /* ─── TICKER ─── */
+  .ticker {
+    border-bottom: 1px solid var(--rule);
+    overflow: hidden; height: 40px;
+    display: flex; align-items: center;
+    background: var(--ink);
+  }
+
+  .ticker-track {
+    display: flex; gap: 0;
+    animation: ticker 30s linear infinite;
+    width: max-content;
+  }
+
+  @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+  .ticker-item {
+    white-space: nowrap; color: #555;
+    font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; padding: 0 28px;
+    display: flex; align-items: center; gap: 0;
+  }
+
+  .ticker-item::after { content: '·'; margin-left: 28px; color: var(--accent); font-size: 14px; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 960px) {
+    nav { padding: 0 24px; }
+    .nav-center { display: none; }
+    .hero { padding: 72px 24px 60px; }
+    .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+    .section { padding: 64px 24px; }
+    .doc-grid { grid-template-columns: 1fr 1fr; }
+    .doc-item:nth-child(3n) { border-right: 1px solid var(--rule); }
+    .doc-item:nth-child(2n) { border-right: none; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .price-card { border-right: none; border-bottom: 1px solid var(--rule); }
+    .about-grid { grid-template-columns: 1fr; }
+    .stats-bar { padding: 24px; gap: 32px; }
+    .cta-section { padding: 72px 24px; }
+    footer { padding: 24px; flex-direction: column; text-align: center; }
+    .footer-links { justify-content: center; }
+  }
+
+  @media (max-width: 560px) {
+    h1 { font-size: 36px; }
+    .doc-grid { grid-template-columns: 1fr; }
+    .doc-item { border-right: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">FNDRY<span class="logo-sub">Build it right</span></a>
+  <div class="nav-center">
+    <a href="#oprichting" class="nav-phase-link">
+      <span class="nav-phase-dot dot-1"></span> Oprichting
+    </a>
+    <a href="#fundraising" class="nav-phase-link">
+      <span class="nav-phase-dot dot-2"></span> Fundraising
+    </a>
+    <a href="#hiring" class="nav-phase-link">
+      <span class="nav-phase-dot dot-3"></span> Hiring
+    </a>
+  </div>
+  <div class="nav-right">
+    <a href="#prijzen" class="nav-link-plain">Prijzen</a>
+    <a href="#over-ons" class="nav-link-plain">Over ons</a>
+    <a href="#prijzen" class="nav-btn">Ga van start</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag">
+        <span class="hero-tag-dot"></span>
+        Voor Nederlandse founders
+      </div>
+      <h1>Hoe de beste<br>startups hun<br><strong>juridische basis regelen.</strong></h1>
+      <p class="hero-sub">FNDRY is het enige Nederlandse platform dat founders helpt hun juridisch papierwerk goed te regelen. Doe het met vertrouwen — zodat je terug kunt naar het bouwen van je startup.</p>
+      <div class="hero-actions">
+        <a href="#prijzen" class="btn-primary">Bekijk de pakketten</a>
+        <a href="#oprichting" class="btn-secondary">Bekijk alle documenten →</a>
+      </div>
+    </div>
+
+    <div class="hero-phases">
+      <div class="hero-phases-header">Wat zit erin per fase</div>
+
+      <a href="#oprichting" class="hero-phase-row">
+        <div class="phase-icon phase-icon-1"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round"><rect x="1" y="1" width="6" height="6"/><rect x="9" y="1" width="6" height="6"/><rect x="1" y="9" width="6" height="6"/><rect x="9" y="9" width="6" height="6"/></svg></div>
+        <div class="phase-row-text">
+          <div class="phase-row-name">
+            Oprichting
+            <span class="phase-tag phase-tag-1">Fase 1</span>
+          </div>
+          <div class="phase-row-docs">SHA · IP-overdracht · Vesting · NDA · ESOP · AVG</div>
+        </div>
+        <div class="phase-price">€199</div>
+      </a>
+
+      <a href="#fundraising" class="hero-phase-row">
+        <div class="phase-icon phase-icon-2"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#7c3aed" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,12 8,4 14,12"/><line x1="8" y1="4" x2="8" y2="15"/></svg></div>
+        <div class="phase-row-text">
+          <div class="phase-row-name">
+            Fundraising
+            <span class="phase-tag phase-tag-2">Fase 2</span>
+          </div>
+          <div class="phase-row-docs">NL-SAFE · Term Sheet · Investeerders-SHA · DD Checklist</div>
+        </div>
+        <div class="phase-price">€199</div>
+      </a>
+
+      <a href="#hiring" class="hero-phase-row">
+        <div class="phase-icon phase-icon-3"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#059669" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.314 2.686-6 6-6s6 2.686 6 6"/></svg></div>
+        <div class="phase-row-text">
+          <div class="phase-row-name">
+            Hiring
+            <span class="phase-tag phase-tag-3">Fase 3</span>
+          </div>
+          <div class="phase-row-docs">Arbeidsovereenkomst · Advisor Agreement · Equity comp</div>
+        </div>
+        <div class="phase-price">€149</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item">Aandeelhoudersovereenkomst</span>
+    <span class="ticker-item">Vesting Schema</span>
+    <span class="ticker-item">IP-overdracht</span>
+    <span class="ticker-item">NL-SAFE</span>
+    <span class="ticker-item">Term Sheet</span>
+    <span class="ticker-item">ESOP-regeling</span>
+    <span class="ticker-item">Arbeidsovereenkomst</span>
+    <span class="ticker-item">Advisor Agreement</span>
+    <span class="ticker-item">Due Diligence Checklist</span>
+    <span class="ticker-item">Privacy Policy AVG</span>
+    <span class="ticker-item">Aandeelhoudersovereenkomst</span>
+    <span class="ticker-item">Vesting Schema</span>
+    <span class="ticker-item">IP-overdracht</span>
+    <span class="ticker-item">NL-SAFE</span>
+    <span class="ticker-item">Term Sheet</span>
+    <span class="ticker-item">ESOP-regeling</span>
+    <span class="ticker-item">Arbeidsovereenkomst</span>
+    <span class="ticker-item">Advisor Agreement</span>
+    <span class="ticker-item">Due Diligence Checklist</span>
+    <span class="ticker-item">Privacy Policy AVG</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<div style="border-bottom: 1px solid var(--rule);">
+  <div class="stats-bar">
+    <div class="stat-item">
+      <span class="stat-num">~12.000</span>
+      <span class="stat-label">BV-oprichtingen per jaar in NL</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">€4.000+</span>
+      <span class="stat-label">Gemiddelde advocaatrekening oprichting</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">3 fases</span>
+      <span class="stat-label">Van oprichting tot eerste investeerder</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">€0</span>
+      <span class="stat-label">Vergelijkbare NL concurrentie</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FASE 1: OPRICHTING ═══ -->
+<div class="phase-section" id="oprichting">
+  <div class="section">
+    <div class="phase-header">
+      <div>
+        <div class="phase-number phase-num-1">Fase 1 — Oprichting</div>
+        <h2>De basis staat.<br>Nu de papieren ook.</h2>
+        <p class="section-lead" style="margin-bottom: 0;">Je BV is opgericht. Dit zijn de documenten die je in de eerste week nodig hebt — voordat je een co-founder aanspreekt, een freelancer inhuurt, of ook maar één regel code deelt.</p>
+      </div>
+      <div class="phase-price-badge">
+        <div class="phase-price-amount">€199</div>
+        <div class="phase-price-note">eenmalig · 6 documenten</div>
+      </div>
+    </div>
+
+    <div class="doc-grid">
+      <div class="doc-item doc-phase-1">
+        <div class="doc-item-num num-1">01</div>
+        <div class="doc-item-name">Aandeelhoudersovereenkomst</div>
+        <div class="doc-item-desc">Voor 2–3 oprichters. Drag-along, tag-along, pre-emptierechten en geschillenprocedure. De basis van iedere solide startup-structuur.</div>
+      </div>
+      <div class="doc-item doc-phase-1">
+        <div class="doc-item-num num-1">02</div>
+        <div class="doc-item-name">Co-founder Vesting Schema</div>
+        <div class="doc-item-desc">4 jaar vesting, 1 jaar cliff. Marktstandaard. Beschermt iedereen als een oprichter voortijdig vertrekt.</div>
+      </div>
+      <div class="doc-item doc-phase-1">
+        <div class="doc-item-num num-1">03</div>
+        <div class="doc-item-name">IP-overdrachtsakte</div>
+        <div class="doc-item-desc">Overdracht van intellectueel eigendom van oprichter(s) naar de BV. Vereist bij iedere due diligence of investeringsronde.</div>
+      </div>
+      <div class="doc-item doc-phase-1">
+        <div class="doc-item-num num-1">04</div>
+        <div class="doc-item-name">NDA (bilateraal + unilateraal)</div>
+        <div class="doc-item-desc">Twee varianten: voor investeerdersgesprekken en voor freelancers/contractors. Direct inzetbaar.</div>
+      </div>
+      <div class="doc-item doc-phase-1">
+        <div class="doc-item-num num-1">05</div>
+        <div class="doc-item-name">Freelance Agreement</div>
+        <div class="doc-item-desc">Inclusief IP-overdracht, geheimhoudingsplicht en non-compete. Elke externe bijdrage gedekt.</div>
+      </div>
+      <div class="doc-item doc-phase-1">
+        <div class="doc-item-num num-1">06</div>
+        <div class="doc-item-name">Privacy Policy + AVG</div>
+        <div class="doc-item-desc">AVG-conforme privacy policy én verwerkersovereenkomst. Klaar voor je website en SaaS-product.</div>
+      </div>
+    </div>
+
+    <div class="phase-cta">
+      <div class="phase-cta-text">
+        <strong>Fase 1 Pakket</strong> — 6 documenten, Word + PDF, annotated versie inclusief
+      </div>
+      <a href="#prijzen" class="phase-btn btn-phase-1">Koop Fase 1 — €199</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FASE 2: FUNDRAISING ═══ -->
+<div class="phase-section" id="fundraising">
+  <div class="section">
+    <div class="phase-header">
+      <div>
+        <div class="phase-number phase-num-2">Fase 2 — Fundraising</div>
+        <h2>Je eerste investeerder<br>klopt aan. Ben je klaar?</h2>
+        <p class="section-lead" style="margin-bottom: 0;">Een investeerder die interesse toont, verwacht dat je papierwerk op orde is. Deze documenten zorgen dat je professioneel overkomt en beschermd bent — van eerste gesprek tot geld op de rekening.</p>
+      </div>
+      <div class="phase-price-badge">
+        <div class="phase-price-amount">€199</div>
+        <div class="phase-price-note">eenmalig · 4 documenten</div>
+      </div>
+    </div>
+
+    <div class="doc-grid">
+      <div class="doc-item doc-phase-2">
+        <div class="doc-item-num num-2">01</div>
+        <div class="doc-item-name">Converteerbare Lening (NL-SAFE)</div>
+        <div class="doc-item-desc">Nederlandse variant van de Y Combinator SAFE. Standaard voor vroege angel-investeringen zonder directe waardering van je bedrijf.</div>
+      </div>
+      <div class="doc-item doc-phase-2">
+        <div class="doc-item-num num-2">02</div>
+        <div class="doc-item-name">Term Sheet (founder-vriendelijk)</div>
+        <div class="doc-item-desc">Een gebalanceerde term sheet die je als founder beschermt. Inclusief toelichting per clausule zodat je weet wat je tekent.</div>
+      </div>
+      <div class="doc-item doc-phase-2">
+        <div class="doc-item-num num-2">03</div>
+        <div class="doc-item-name">SHA met externe investeerder</div>
+        <div class="doc-item-desc">Aandeelhoudersovereenkomst voor als een investeerder aandeelhouder wordt. Beschermt je zeggenschap en anti-dilutie rechten.</div>
+      </div>
+      <div class="doc-item doc-phase-2">
+        <div class="doc-item-num num-2">04</div>
+        <div class="doc-item-name">Due Diligence Checklist</div>
+        <div class="doc-item-desc">Wat elke serieuze investeerder gaat vragen. Bereid je voor zodat je geen verrassingen tegenkomt als het er echt om gaat.</div>
+      </div>
+    </div>
+
+    <div class="phase-cta">
+      <div class="phase-cta-text">
+        <strong>Fase 2 Pakket</strong> — 4 documenten, Word + PDF, annotated versie inclusief
+      </div>
+      <a href="#prijzen" class="phase-btn btn-phase-2">Koop Fase 2 — €199</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FASE 3: HIRING ═══ -->
+<div class="phase-section" id="hiring">
+  <div class="section">
+    <div class="phase-header">
+      <div>
+        <div class="phase-number phase-num-3">Fase 3 — Hiring</div>
+        <h2>Je eerste medewerker<br>of adviseur. Doe het goed.</h2>
+        <p class="section-lead" style="margin-bottom: 0;">De meeste startups gebruiken bij de eerste aanstelling een arbeidscontract van internet of van hun vader. Dat is een tijdbom. Goed geregeld papierwerk beschermt het IP van je bedrijf en voorkomt problemen bij een latere exit of due diligence.</p>
+      </div>
+      <div class="phase-price-badge">
+        <div class="phase-price-amount">€149</div>
+        <div class="phase-price-note">eenmalig · 4 documenten</div>
+      </div>
+    </div>
+
+    <div class="doc-grid">
+      <div class="doc-item doc-phase-3">
+        <div class="doc-item-num num-3">01</div>
+        <div class="doc-item-name">Arbeidsovereenkomst</div>
+        <div class="doc-item-desc">Bepaalde én onbepaalde tijd variant. Inclusief geheimhouding, IP-overdracht en concurrentiebeding. Conform NL arbeidsrecht.</div>
+      </div>
+      <div class="doc-item doc-phase-3">
+        <div class="doc-item-num num-3">02</div>
+        <div class="doc-item-name">ESOP-regeling (≤10 FTE)</div>
+        <div class="doc-item-desc">Werknemersoptieplan conform Nederlands recht. Inclusief uitleg fiscale behandeling en uitoefeningsmodaliteiten.</div>
+      </div>
+      <div class="doc-item doc-phase-3">
+        <div class="doc-item-num num-3">03</div>
+        <div class="doc-item-name">Advisor Agreement</div>
+        <div class="doc-item-desc">Voor adviseurs en mentoren die equity krijgen voor hun bijdrage. Inclusief vesting-schema en bescherming van beide partijen.</div>
+      </div>
+      <div class="doc-item doc-phase-3">
+        <div class="doc-item-num num-3">04</div>
+        <div class="doc-item-name">Geheimhoudingsverklaring medewerker</div>
+        <div class="doc-item-desc">Specifiek voor medewerkers — sterker en uitgebreider dan een zakelijke NDA. Beschermt bedrijfsgeheimen, klantendata en broncode.</div>
+      </div>
+    </div>
+
+    <div class="phase-cta">
+      <div class="phase-cta-text">
+        <strong>Fase 3 Pakket</strong> — 4 documenten, Word + PDF, annotated versie inclusief
+      </div>
+      <a href="#prijzen" class="phase-btn btn-phase-3">Koop Fase 3 — €149</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PRICING ═══ -->
+<div class="pricing-section" id="prijzen">
+  <div class="section">
+    <div class="section-eyebrow">Prijzen</div>
+    <h2>Koop per fase of alles tegelijk.</h2>
+    <p class="section-lead">Betaal alleen voor wat je nu nodig hebt — of neem de Complete bundel en bespaar €98.</p>
+
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-card-label">Pay per fase</div>
+        <div class="price-main">Per fase</div>
+        <div class="price-sub">Betaal alleen wat je nu nodig hebt, precies op het moment dat je het nodig hebt.</div>
+
+        <div class="price-includes">
+          <div class="price-includes-label">Per pakket</div>
+          <div class="price-phase-row">
+            <span class="phase-pill pill-1">Fase 1</span>
+            <span class="price-phase-name">Oprichting — 6 documenten</span>
+            <span class="price-phase-amount">€199</span>
+          </div>
+          <div class="price-phase-row">
+            <span class="phase-pill pill-2">Fase 2</span>
+            <span class="price-phase-name">Fundraising — 4 documenten</span>
+            <span class="price-phase-amount">€199</span>
+          </div>
+          <div class="price-phase-row">
+            <span class="phase-pill pill-3">Fase 3</span>
+            <span class="price-phase-name">Hiring — 4 documenten</span>
+            <span class="price-phase-amount">€149</span>
+          </div>
+        </div>
+
+        <a href="#oprichting" class="price-btn">Begin met Fase 1</a>
+      </div>
+
+      <div class="price-card featured">
+        <div class="price-card-label">Complete bundel — meest gekozen</div>
+        <div class="price-main">€449</div>
+        <div class="price-sub">Alle drie de pakketten. Alles wat je nodig hebt van oprichting tot eerste medewerker.</div>
+
+        <div class="price-includes">
+          <div class="price-includes-label">Inbegrepen</div>
+          <div class="price-phase-row">
+            <span class="phase-pill pill-1">Fase 1</span>
+            <span class="price-phase-name">Oprichting — 6 documenten</span>
+            <span class="price-phase-amount strikethrough">€199</span>
+          </div>
+          <div class="price-phase-row">
+            <span class="phase-pill pill-2">Fase 2</span>
+            <span class="price-phase-name">Fundraising — 4 documenten</span>
+            <span class="price-phase-amount strikethrough">€199</span>
+          </div>
+          <div class="price-phase-row">
+            <span class="phase-pill pill-3">Fase 3</span>
+            <span class="price-phase-name">Hiring — 4 documenten</span>
+            <span class="price-phase-amount strikethrough">€149</span>
+          </div>
+        </div>
+
+        <div class="price-saving">Je bespaart €98 ten opzichte van losse aankoop</div>
+
+        <a href="#" class="price-btn">Complete bundel kopen — €449</a>
+      </div>
+    </div>
+
+    <p style="font-size: 13px; color: var(--mid); margin-top: 20px; text-align: center;">Alle pakketten inclusief Word + PDF, annotated versie met clausule-uitleg, en gratis updates gedurende 1 jaar.</p>
+  </div>
+</div>
+
+<!-- ═══ OVER ONS ═══ -->
+<div class="section" id="over-ons">
+  <div class="section-eyebrow">Over ons</div>
+  <h2>Geen advocatenkantoor.<br>Wel gemaakt door advocaten.</h2>
+
+  <div class="about-grid">
+    <div class="about-card">
+      <span class="about-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><line x1="10" y1="2" x2="10" y2="18"/><line x1="3" y1="5" x2="17" y2="5"/><path d="M3 5 L1 11 C1 13 4 14 6 13 C8 12 8 8 6 7 L3 5Z"/><path d="M17 5 L19 11 C19 13 16 14 14 13 C12 12 12 8 14 7 L17 5Z"/></svg></span>
+      <div class="about-title">Wie we zijn</div>
+      <div class="about-body">We zijn geen advocatenkantoor en niet jouw advocaat. Maar FNDRY wordt geleid door ondernemingsrechtadvocaten die werkzaam zijn geweest bij een van de toonaangevende startup-praktijken in Nederland. We hebben uit eerste hand gezien hoe problemen met juridisch papierwerk startups tijd en geld kosten.</div>
+    </div>
+    <div class="about-card">
+      <span class="about-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="10" cy="10" r="8"/><circle cx="10" cy="10" r="4"/><circle cx="10" cy="10" r="1" fill="currentColor"/></svg></span>
+      <div class="about-title">Waarom FNDRY bestaat</div>
+      <div class="about-body">De meeste juridische problemen bij startups zijn te voorkomen met goede basisdocumenten. Wij hebben die documenten gemaakt — op hetzelfde niveau als top advocatenkantoren — zodat founders ze kunnen gebruiken zonder €400/uur te betalen.</div>
+    </div>
+    <div class="about-card">
+      <span class="about-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="12" height="9" rx="1"/><path d="M7 9V6a3 3 0 0 1 6 0v3"/></svg></span>
+      <div class="about-title">Wat we niet zijn</div>
+      <div class="about-body">Een advocatenkantoor. We geven geen juridisch advies over jouw specifieke situatie. Voor complexe vraagstukken raden we altijd een advocaat aan. Onze documenten zijn de professionele basis — een advocaat is de maatwerklaag erop.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FAQ ═══ -->
+<div class="section" style="padding-top: 0;" id="faq">
+  <div class="section-eyebrow">FAQ</div>
+  <h2>Veelgestelde vragen.</h2>
+
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q">Moet ik alle drie de pakketten kopen? <span class="faq-q-icon">+</span></div>
+      <div class="faq-a">Nee. Je koopt precies wat je nu nodig hebt. De meeste founders beginnen met Fase 1 bij oprichting. Fase 2 wordt relevant als er een investeerder aankloopt. Fase 3 zodra je iemand aanneemt of een adviseur wil aantrekken. Je kunt pakketten op elk moment los bijkopen.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Zijn deze documenten juridisch bindend? <span class="faq-q-icon">+</span></div>
+      <div class="faq-a">Ja. De documenten zijn opgesteld conform Nederlands recht en volledig rechtsgeldig. Ze zijn gereviewed door ervaren ondernemingsrechtadvocaten. Elke document bevat een annotated versie met clausule-voor-clausule uitleg, zodat je bewust en geïnformeerd tekent.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Heb ik na aankoop nog een advocaat nodig? <span class="faq-q-icon">+</span></div>
+      <div class="faq-a">Voor standaard situaties: nee. Onze documenten dekken de gevallen af waar 95% van de founders mee te maken krijgt. Bij grote investeringsrondes (€500k+), complexe aandeelhoudersstructuren of internationale expansie is maatwerk advies verstandig. Wij zijn eerlijk over waar die grens ligt.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">In welk formaat ontvang ik de documenten? <span class="faq-q-icon">+</span></div>
+      <div class="faq-a">Als bewerkbare Word (.docx) en PDF. Elk document bevat ook een annotated versie met uitleg per clausule in gewone taal. Je begrijpt wat je tekent en weet wat je kunt aanpassen.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Wat als de wet verandert? <span class="faq-q-icon">+</span></div>
+      <div class="faq-a">Alle kopers ontvangen gratis updates gedurende 1 jaar na aankoop. Als relevante wetgeving of jurisprudentie verandert, ontvang je per e-mail de bijgewerkte versie van je documenten.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CTA ═══ -->
+<div class="cta-section" id="start">
+  <div class="section-eyebrow" style="justify-content: center;">Begin vandaag</div>
+  <h2>Bouw het <strong>goed</strong> op,<br>vanaf dag één.</h2>
+  <p class="cta-sub">Kies je fase of neem de complete bundel. Direct downloadbaar.</p>
+  <div class="cta-options">
+    <a href="#" class="cta-btn-main">Complete bundel — €449</a>
+    <a href="#oprichting" class="cta-btn-ghost">Begin met Fase 1 — €199</a>
+  </div>
+  <p class="cta-note">14 documenten · Word + PDF · Annotated versies · 1 jaar updates</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div>© 2025 FNDRY B.V. · KVK [nummer]</div>
+  <div class="footer-links">
+    <a href="#">Disclaimer</a>
+    <a href="#">Privacy</a>
+    <a href="#">Contact</a>
+  </div>
+  <div class="footer-disclaimer">
+    FNDRY B.V. is geen advocatenkantoor en verleent geen juridisch advies over individuele situaties. FNDRY levert juridische documentproducten voor educatieve en zelfredzaamheidsdoeleinden. Raadpleeg een advocaat voor specifiek juridisch advies.
+  </div>
+</footer>
+
+</body>
+</html>
