@@ -283,7 +283,10 @@
   .stat-num {
     font-family: 'Geist', sans-serif; font-size: 28px; font-weight: 700;
     color: var(--accent); letter-spacing: -1px; display: block;
+    font-variant-numeric: tabular-nums;
+    min-width: 5ch;
   }
+  .stat-num.is-animating { will-change: contents; }
   .stat-label { font-size: 12px; color: var(--mid); }
 
   /* ─── PHASE SECTIONS ─── */
@@ -777,10 +780,10 @@
 
   <div style="border-bottom: 1px solid var(--rule);">
     <div class="stats-bar">
-      <div><span class="stat-num">~12.000</span><span class="stat-label">BV-oprichtingen per jaar in NL</span></div>
-      <div><span class="stat-num">€4.000+</span><span class="stat-label">Gemiddelde advocaatrekening oprichting</span></div>
-      <div><span class="stat-num">3 fases</span><span class="stat-label">Van oprichting tot eerste investeerder</span></div>
-      <div><span class="stat-num">€0</span><span class="stat-label">Vergelijkbare NL concurrentie</span></div>
+      <div><span class="stat-num" data-target="12000" data-prefix="~" data-suffix="+" data-format="thousands">0</span><span class="stat-label">BV-oprichtingen per jaar in NL</span></div>
+      <div><span class="stat-num" data-target="4000" data-prefix="€" data-suffix="+">0</span><span class="stat-label">Gemiddelde advocaatrekening oprichting</span></div>
+      <div><span class="stat-num" data-target="3" data-suffix=" fases">0</span><span class="stat-label">Van oprichting tot eerste investeerder</span></div>
+      <div><span class="stat-num" data-target="0" data-prefix="€">0</span><span class="stat-label">Vergelijkbare NL concurrentie</span></div>
     </div>
   </div>
 
@@ -1109,6 +1112,62 @@
 </div><!-- end page-attorneys -->
 
 <script>
+  function animateCountUp() {
+    const stats = document.querySelectorAll('.stat-num[data-target]');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+
+        const el = entry.target;
+        const target = parseInt(el.dataset.target, 10);
+        const prefix = el.dataset.prefix || '';
+        const suffix = el.dataset.suffix || '';
+        const format = el.dataset.format;
+        const duration = 6000;
+        const steps = 60;
+        const interval = duration / steps;
+        let step = 0;
+
+        el.classList.add('is-animating');
+
+        if (target === 0) {
+          el.textContent = prefix + '0' + suffix;
+          el.classList.remove('is-animating');
+          return;
+        }
+
+        const timer = setInterval(() => {
+          step++;
+          const progress = 1 - Math.pow(1 - step / steps, 4);
+          const current = Math.round(target * progress);
+
+          let display = current;
+          if (format === 'thousands') {
+            display = current.toLocaleString('nl-NL');
+          }
+
+          el.textContent = prefix + display + suffix;
+
+          if (step >= steps) {
+            clearInterval(timer);
+            if (format === 'thousands') {
+              el.textContent = prefix + '12.000' + suffix;
+            } else {
+              el.textContent = prefix + target.toLocaleString('nl-NL') + suffix;
+            }
+            el.classList.remove('is-animating');
+          }
+        }, interval);
+      });
+    }, { threshold: 0.3 });
+
+    stats.forEach(el => observer.observe(el));
+  }
+
+  document.addEventListener('DOMContentLoaded', animateCountUp);
+
   function showPage(page) {
     // Hide all pages
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
