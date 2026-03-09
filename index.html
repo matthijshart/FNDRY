@@ -32,6 +32,103 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  /* ─── SPLASH SCREEN ─── */
+  .splash {
+    position: fixed; inset: 0; z-index: 200;
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: none;
+  }
+
+  .splash-half {
+    position: absolute; left: 0; right: 0;
+    background: var(--bg);
+    transition: none;
+    will-change: transform;
+  }
+
+  .splash-top {
+    top: 0; bottom: 50%;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .splash-bottom {
+    top: 50%; bottom: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .splash-content {
+    position: relative; z-index: 1;
+    text-align: center;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 12px;
+    will-change: opacity, transform;
+  }
+
+  .splash-title {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(48px, 12vw, 120px);
+    font-weight: 700;
+    letter-spacing: 16px;
+    text-transform: uppercase;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .splash-sub {
+    font-size: clamp(10px, 2vw, 14px);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .splash-scroll-hint {
+    position: fixed;
+    bottom: 32px; left: 50%;
+    transform: translateX(-50%);
+    z-index: 201;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--mid);
+    display: flex; flex-direction: column;
+    align-items: center; gap: 8px;
+    animation: hintPulse 2s ease-in-out infinite;
+    will-change: opacity;
+  }
+
+  .splash-scroll-hint svg {
+    animation: hintBounce 2s ease-in-out infinite;
+  }
+
+  @keyframes hintPulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+
+  @keyframes hintBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(4px); }
+  }
+
+  .splash.done {
+    display: none;
+  }
+
+  .splash.done + .splash-scroll-hint {
+    display: none;
+  }
+
+  /* Spacer to allow scrolling during splash */
+  .splash-spacer {
+    height: 100vh;
+    pointer-events: none;
+  }
+
+  .splash-spacer.done {
+    display: none;
+  }
+
   /* ─── PAGE SWITCHING ─── */
   .page { display: none; }
   .page.active { display: block; }
@@ -44,6 +141,13 @@
     border-bottom: 1px solid var(--rule);
     padding: 0 56px; height: 62px;
     display: flex; align-items: center; justify-content: space-between;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  nav.visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .logo {
@@ -694,6 +798,21 @@
 </head>
 <body>
 
+<!-- ═══ SPLASH SCREEN ═══ -->
+<div class="splash" id="splash">
+  <div class="splash-half splash-top"></div>
+  <div class="splash-half splash-bottom"></div>
+  <div class="splash-content" id="splash-content">
+    <div class="splash-title">FNDRY</div>
+    <div class="splash-sub">Build it right</div>
+  </div>
+</div>
+<div class="splash-scroll-hint" id="splash-hint">
+  <span>Scroll</span>
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v10M4 9l4 4 4-4"/></svg>
+</div>
+<div class="splash-spacer" id="splash-spacer"></div>
+
 <!-- ═══ SHARED NAV ═══ -->
 <nav>
   <div class="logo" onclick="showPage('founders')">
@@ -1115,6 +1234,69 @@
 </div><!-- end page-attorneys -->
 
 <script>
+  // ─── SPLASH SCROLL ANIMATION ───
+  (function() {
+    const splash = document.getElementById('splash');
+    const splashContent = document.getElementById('splash-content');
+    const splashHint = document.getElementById('splash-hint');
+    const splashSpacer = document.getElementById('splash-spacer');
+    const nav = document.querySelector('nav');
+    const splashTop = splash.querySelector('.splash-top');
+    const splashBottom = splash.querySelector('.splash-bottom');
+
+    let splashDone = false;
+
+    function handleSplashScroll() {
+      if (splashDone) return;
+
+      const scrollY = window.scrollY;
+      const threshold = window.innerHeight * 0.6;
+      const progress = Math.min(scrollY / threshold, 1);
+
+      // Ease out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+
+      // Move halves apart
+      const translateAmount = eased * 110; // percentage
+      splashTop.style.transform = 'translateY(-' + translateAmount + '%)';
+      splashBottom.style.transform = 'translateY(' + translateAmount + '%)';
+
+      // Fade and scale the text
+      const textOpacity = Math.max(1 - progress * 2.5, 0);
+      const textScale = 1 - eased * 0.15;
+      splashContent.style.opacity = textOpacity;
+      splashContent.style.transform = 'scale(' + textScale + ')';
+
+      // Fade the scroll hint
+      splashHint.style.opacity = Math.max(1 - progress * 4, 0);
+
+      // Show nav as splash disappears
+      if (progress > 0.5) {
+        nav.classList.add('visible');
+      } else {
+        nav.classList.remove('visible');
+      }
+
+      // When fully scrolled past, remove splash
+      if (progress >= 1) {
+        splashDone = true;
+        splash.classList.add('done');
+        splashHint.style.display = 'none';
+        splashSpacer.classList.add('done');
+        nav.classList.add('visible');
+        window.removeEventListener('scroll', handleSplashScroll);
+        // Reset scroll position to top of content
+        window.scrollTo(0, 0);
+      }
+    }
+
+    window.addEventListener('scroll', handleSplashScroll, { passive: true });
+
+    // Also handle wheel on splash when no scroll yet
+    // Ensure page starts at top
+    window.scrollTo(0, 0);
+  })();
+
   function animateCountUp() {
     const stats = document.querySelectorAll('.stat-num[data-target]');
 
