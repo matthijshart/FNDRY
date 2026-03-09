@@ -1244,11 +1244,7 @@
     const splashTop = splash.querySelector('.splash-top');
     const splashBottom = splash.querySelector('.splash-bottom');
 
-    let splashDone = false;
-
     function handleSplashScroll() {
-      if (splashDone) return;
-
       const scrollY = window.scrollY;
       const threshold = window.innerHeight * 0.6;
       const progress = Math.min(scrollY / threshold, 1);
@@ -1267,32 +1263,27 @@
       splashContent.style.opacity = textOpacity;
       splashContent.style.transform = 'scale(' + textScale + ')';
 
-      // Fade the scroll hint
-      splashHint.style.opacity = Math.max(1 - progress * 4, 0);
-
-      // Show nav as splash disappears
+      // Show nav as splash disappears, hide when scrolling back
       if (progress > 0.5) {
         nav.classList.add('visible');
       } else {
         nav.classList.remove('visible');
       }
 
-      // When fully scrolled past, remove splash
+      // When fully scrolled past: hide splash
+      // When scrolling back: restore splash
       if (progress >= 1) {
-        splashDone = true;
         splash.classList.add('done');
         splashHint.style.display = 'none';
-        splashSpacer.classList.add('done');
-        nav.classList.add('visible');
-        window.removeEventListener('scroll', handleSplashScroll);
-        // Reset scroll position to top of content
-        window.scrollTo(0, 0);
+      } else {
+        splash.classList.remove('done');
+        splashHint.style.display = '';
+        splashHint.style.opacity = Math.max(1 - progress * 4, 0);
       }
     }
 
     window.addEventListener('scroll', handleSplashScroll, { passive: true });
 
-    // Also handle wheel on splash when no scroll yet
     // Ensure page starts at top
     window.scrollTo(0, 0);
   })();
