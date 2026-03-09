@@ -332,8 +332,12 @@
   .hero-phase-row {
     display: flex; align-items: flex-start; gap: 14px;
     padding: 18px 20px; border-bottom: 1px solid var(--rule);
-    transition: background 0.15s; cursor: pointer;
+    transition: background 0.15s, opacity 0.45s ease, transform 0.45s ease; cursor: pointer;
     text-decoration: none; color: inherit;
+    opacity: 0; transform: translateY(14px);
+  }
+  .hero-phase-row.visible {
+    opacity: 1; transform: translateY(0);
   }
   .hero-phase-row:last-child { border-bottom: none; }
   .hero-phase-row:hover { background: var(--pale); }
@@ -905,7 +909,6 @@
       <div><span class="stat-num" data-target="12000" data-prefix="~" data-suffix="+" data-format="thousands">0</span><span class="stat-label">BV-oprichtingen per jaar in NL</span></div>
       <div><span class="stat-num" data-target="4000" data-prefix="€" data-suffix="+">0</span><span class="stat-label">Gemiddelde advocaatrekening oprichting</span></div>
       <div><span class="stat-num" data-target="3" data-suffix=" fases">0</span><span class="stat-label">Van oprichting tot eerste investeerder</span></div>
-      <div><span class="stat-num" data-target="0" data-prefix="€">0</span><span class="stat-label">Vergelijkbare NL concurrentie</span></div>
     </div>
   </div>
 
@@ -1343,6 +1346,23 @@
   }
 
   document.addEventListener('DOMContentLoaded', animateCountUp);
+
+  // Staggered animation for 'Wat zit erin' rows
+  (function() {
+    const phases = document.querySelector('.hero-phases');
+    if (!phases) return;
+    const rows = phases.querySelectorAll('.hero-phase-row');
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+        rows.forEach(function(row, i) {
+          setTimeout(function() { row.classList.add('visible'); }, i * 160);
+        });
+      });
+    }, { threshold: 0.2 });
+    observer.observe(phases);
+  })();
 
   function showPage(page) {
     // Hide all pages
