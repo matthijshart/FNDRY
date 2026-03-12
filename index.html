@@ -32,102 +32,7 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ─── SPLASH SCREEN ─── */
-  .splash {
-    position: fixed; inset: 0; z-index: 200;
-    display: flex; align-items: center; justify-content: center;
-    pointer-events: none;
-  }
-
-  .splash-half {
-    position: absolute; left: 0; right: 0;
-    background: var(--bg);
-    transition: none;
-    will-change: transform;
-  }
-
-  .splash-top {
-    top: 0; bottom: 50%;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .splash-bottom {
-    top: 50%; bottom: 0;
-    border-top: 1px solid var(--rule);
-  }
-
-  .splash-content {
-    position: relative; z-index: 1;
-    text-align: center;
-    display: flex; flex-direction: column;
-    align-items: center; gap: 12px;
-    will-change: opacity, transform;
-  }
-
-  .splash-title {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(48px, 12vw, 120px);
-    font-weight: 700;
-    letter-spacing: 16px;
-    text-transform: uppercase;
-    color: var(--ink);
-    line-height: 1;
-  }
-
-  .splash-sub {
-    font-size: clamp(10px, 2vw, 14px);
-    letter-spacing: 6px;
-    text-transform: uppercase;
-    color: var(--accent);
-    font-weight: 500;
-  }
-
-  .splash-scroll-hint {
-    position: fixed;
-    bottom: 32px; left: 50%;
-    transform: translateX(-50%);
-    z-index: 201;
-    font-size: 11px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--mid);
-    display: flex; flex-direction: column;
-    align-items: center; gap: 8px;
-    animation: hintPulse 2s ease-in-out infinite;
-    will-change: opacity;
-  }
-
-  .splash-scroll-hint svg {
-    animation: hintBounce 2s ease-in-out infinite;
-  }
-
-  @keyframes hintPulse {
-    0%, 100% { opacity: 0.6; }
-    50% { opacity: 1; }
-  }
-
-  @keyframes hintBounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(4px); }
-  }
-
-  .splash.done {
-    display: none;
-  }
-
-  .splash.done + .splash-scroll-hint {
-    display: none;
-  }
-
-  /* Spacer to allow scrolling during splash */
-  .splash-spacer {
-    height: 100vh;
-    pointer-events: none;
-  }
-
-  .splash-spacer.done {
-    display: none;
-  }
+  /* splash removed */
 
   /* ─── PAGE SWITCHING ─── */
   .page { display: none; }
@@ -136,18 +41,12 @@
   /* ─── NAV ─── */
   nav {
     position: sticky; top: 0; z-index: 100;
-    background: rgba(255,255,255,0.96);
-    backdrop-filter: blur(10px);
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--rule);
     padding: 0 56px; height: 62px;
     display: flex; align-items: center; justify-content: space-between;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-  }
-  nav.visible {
-    opacity: 1;
-    transform: translateY(0);
   }
 
   .logo {
@@ -169,7 +68,7 @@
   .nav-phase-link {
     font-size: 13px; color: var(--mid);
     text-decoration: none; padding: 6px 14px;
-    border-radius: 4px; transition: all 0.15s;
+    border-radius: 8px; transition: all 0.15s;
     display: flex; align-items: center; gap: 6px;
   }
   .nav-phase-link:hover { background: var(--pale); color: var(--ink); }
@@ -183,6 +82,7 @@
 
   .nav-switcher {
     display: flex; border: 1px solid var(--rule); overflow: hidden;
+    border-radius: 8px;
   }
 
   .nav-switch-btn {
@@ -206,10 +106,10 @@
     background: var(--accent); color: #fff;
     padding: 9px 20px; font-family: 'Inter', sans-serif;
     font-size: 13px; font-weight: 600;
-    text-decoration: none; transition: opacity 0.15s;
-    border: none; cursor: pointer;
+    text-decoration: none; transition: all 0.2s;
+    border: none; cursor: pointer; border-radius: 8px;
   }
-  .nav-btn:hover { opacity: 0.85; }
+  .nav-btn:hover { background: #15304d; }
 
   .nav-link {
     font-size: 13px; color: var(--mid);
@@ -224,11 +124,10 @@
   }
 
   .section-eyebrow {
-    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    font-size: 13px; letter-spacing: 0.5px;
     color: var(--accent); margin-bottom: 12px;
     display: flex; align-items: center; gap: 10px; font-weight: 600;
   }
-  .section-eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--accent); }
 
   h2 {
     font-family: 'Geist', sans-serif;
@@ -247,15 +146,7 @@
     padding: 96px 56px 80px;
     border-bottom: 1px solid var(--rule);
     position: relative; overflow: hidden;
-  }
-
-  .f-hero-grid {
-    position: absolute; inset: 0; pointer-events: none;
-    background-image:
-      linear-gradient(var(--rule) 1px, transparent 1px),
-      linear-gradient(90deg, var(--rule) 1px, transparent 1px);
-    background-size: 48px 48px; opacity: 0.4;
-    mask-image: radial-gradient(ellipse 70% 90% at 60% 40%, black 0%, transparent 70%);
+    background: linear-gradient(170deg, var(--bg) 0%, var(--pale) 100%);
   }
 
   .hero-inner {
@@ -266,17 +157,11 @@
 
   .hero-tag {
     display: inline-flex; align-items: center; gap: 8px;
-    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    font-size: 13px; font-weight: 500;
     color: var(--accent); margin-bottom: 28px;
-    border: 1px solid rgba(26,58,92,0.2); padding: 5px 12px;
+    background: rgba(26,58,92,0.06); padding: 6px 14px;
+    border-radius: 20px;
   }
-
-  .hero-tag-dot {
-    width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
-    animation: blink 2s ease-in-out infinite;
-  }
-
-  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
 
   h1 {
     font-family: 'Geist', sans-serif;
@@ -298,35 +183,39 @@
     background: var(--accent); color: #fff;
     padding: 14px 28px; font-family: 'Inter', sans-serif;
     font-size: 14px; font-weight: 600;
-    text-decoration: none; transition: opacity 0.15s;
+    text-decoration: none; transition: all 0.2s;
     display: inline-block; border: none; cursor: pointer;
+    border-radius: 10px;
   }
-  .btn-primary:hover { opacity: 0.85; }
+  .btn-primary:hover { background: #15304d; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(26,58,92,0.2); }
 
   .btn-outline {
-    border: 1px solid var(--accent); color: var(--accent);
+    border: 1px solid var(--rule); color: var(--ink);
     padding: 14px 24px; font-family: 'Inter', sans-serif;
     font-size: 14px; font-weight: 500;
-    text-decoration: none; transition: background 0.15s; display: inline-block;
+    text-decoration: none; transition: all 0.2s; display: inline-block;
+    border-radius: 10px; background: var(--bg);
   }
-  .btn-outline:hover { background: var(--accent-light); }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
 
   .btn-text {
     font-size: 14px; color: var(--mid); text-decoration: none;
-    transition: color 0.15s; display: flex; align-items: center; gap: 6px;
+    transition: color 0.2s; display: flex; align-items: center; gap: 6px;
     background: none; border: none; cursor: pointer; font-family: 'Inter', sans-serif;
   }
-  .btn-text:hover { color: var(--ink); }
+  .btn-text:hover { color: var(--accent); }
 
   /* Hero phase card */
   .hero-phases {
     border: 1px solid var(--rule); background: var(--bg); overflow: hidden;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
   }
 
   .hero-phases-header {
     padding: 16px 20px; background: var(--pale);
     border-bottom: 1px solid var(--rule);
-    font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--mid);
+    font-size: 13px; font-weight: 500; color: var(--mid);
   }
 
   .hero-phase-row {
@@ -357,8 +246,8 @@
   }
 
   .phase-tag {
-    font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
-    padding: 2px 7px; border-radius: 3px; font-weight: 500;
+    font-size: 11px; letter-spacing: 0;
+    padding: 2px 8px; border-radius: 6px; font-weight: 500;
   }
   .phase-tag-1 { background: rgba(37,99,235,0.1); color: #2563eb; }
   .phase-tag-2 { background: rgba(124,58,237,0.1); color: #7c3aed; }
@@ -367,20 +256,7 @@
   .phase-row-docs { font-size: 12px; color: var(--mid); line-height: 1.5; }
   .phase-price { margin-left: auto; flex-shrink: 0; font-size: 17px; font-weight: 700; align-self: center; padding-left: 12px; }
 
-  /* ─── TICKER ─── */
-  .ticker {
-    border-bottom: 1px solid var(--rule); overflow: hidden;
-    height: 40px; display: flex; align-items: center; background: var(--ink);
-  }
-  .ticker-track {
-    display: flex; animation: ticker 30s linear infinite; width: max-content;
-  }
-  @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-  .ticker-item {
-    white-space: nowrap; color: #fafafa;
-    font-size: 11px; letter-spacing: 2px; text-transform: uppercase; padding: 0 28px;
-  }
-  .ticker-item::after { content: '·'; margin-left: 28px; color: var(--accent); font-size: 14px; }
+  /* ticker removed */
 
   /* ─── STATS ─── */
   .stats-bar {
@@ -406,10 +282,9 @@
   }
 
   .phase-number {
-    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-    margin-bottom: 8px; display: flex; align-items: center; gap: 10px; font-weight: 600;
+    font-size: 13px; font-weight: 600;
+    margin-bottom: 8px; display: flex; align-items: center; gap: 10px;
   }
-  .phase-number::before { content: ''; width: 16px; height: 1px; }
   .phase-num-1 { color: #2563eb; }
   .phase-num-1::before { background: #2563eb; }
   .phase-num-2 { color: #7c3aed; }
@@ -428,6 +303,7 @@
   .doc-grid {
     display: grid; grid-template-columns: repeat(3, 1fr);
     gap: 0; border: 1px solid var(--rule); margin-bottom: 24px;
+    border-radius: 12px; overflow: hidden;
   }
 
   .doc-item {
@@ -442,8 +318,8 @@
   .doc-phase-3:hover { background: rgba(5,150,105,0.04); }
 
   .doc-item-num {
-    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
-    margin-bottom: 10px; font-weight: 600; opacity: 0.6;
+    font-size: 12px; font-weight: 600;
+    margin-bottom: 10px; opacity: 0.5;
   }
   .num-1 { color: #2563eb; }
   .num-2 { color: #7c3aed; }
@@ -455,6 +331,7 @@
   .phase-cta {
     display: flex; align-items: center; justify-content: space-between;
     padding: 18px 24px; border: 1px solid var(--rule); background: var(--pale);
+    border-radius: 12px;
   }
   .phase-cta-text { font-size: 13px; color: var(--mid); }
   .phase-cta-text strong { color: var(--ink); }
@@ -462,9 +339,10 @@
   .phase-btn {
     padding: 10px 22px; font-family: 'Inter', sans-serif;
     font-size: 13px; font-weight: 600; text-decoration: none;
-    transition: opacity 0.15s; white-space: nowrap; flex-shrink: 0; color: #fff;
+    transition: all 0.2s; white-space: nowrap; flex-shrink: 0; color: #fff;
+    border-radius: 8px;
   }
-  .phase-btn:hover { opacity: 0.85; }
+  .phase-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
   .btn-phase-1 { background: #2563eb; }
   .btn-phase-2 { background: #7c3aed; }
   .btn-phase-3 { background: #059669; }
@@ -476,20 +354,19 @@
   }
 
   .pricing-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
-    border: 1px solid var(--rule); overflow: hidden;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
   }
 
   .price-card {
     background: var(--bg); padding: 40px;
-    border-right: 1px solid var(--rule); position: relative;
+    border: 1px solid var(--rule); position: relative;
+    border-radius: 16px;
   }
-  .price-card:last-child { border-right: none; }
-  .price-card.featured { background: var(--accent); border-right: none; }
+  .price-card.featured { background: var(--accent); border-color: var(--accent); box-shadow: 0 12px 40px rgba(26,58,92,0.2); }
 
   .price-card-label {
-    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--mid); margin-bottom: 20px; font-weight: 600;
+    font-size: 13px; font-weight: 600;
+    color: var(--mid); margin-bottom: 20px;
   }
   .price-card.featured .price-card-label { color: rgba(255,255,255,0.5); }
 
@@ -506,8 +383,8 @@
   .price-card.featured .price-sub { color: rgba(255,255,255,0.55); border-color: rgba(255,255,255,0.15); }
 
   .price-includes-label {
-    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--mid); margin-bottom: 14px; font-weight: 600;
+    font-size: 12px; font-weight: 600;
+    color: var(--mid); margin-bottom: 14px;
   }
   .price-card.featured .price-includes-label { color: rgba(255,255,255,0.5); }
 
@@ -519,8 +396,8 @@
   .price-card.featured .price-phase-row { border-color: rgba(255,255,255,0.12); color: #fff; }
 
   .phase-pill {
-    font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
-    padding: 2px 8px; border-radius: 3px; font-weight: 600; flex-shrink: 0;
+    font-size: 11px; font-weight: 600;
+    padding: 3px 10px; border-radius: 6px; flex-shrink: 0;
   }
   .pill-1 { background: rgba(37,99,235,0.12); color: #2563eb; }
   .pill-2 { background: rgba(124,58,237,0.12); color: #7c3aed; }
@@ -538,6 +415,7 @@
     background: rgba(26,107,60,0.1); color: var(--green);
     font-size: 12px; font-weight: 600; padding: 8px 16px;
     margin: 20px 0; text-align: center; border: 1px solid rgba(26,107,60,0.15);
+    border-radius: 8px;
   }
   .price-card.featured .price-saving { background: rgba(255,255,255,0.12); color: #fff; border-color: rgba(255,255,255,0.2); }
 
@@ -546,20 +424,21 @@
   .price-btn {
     display: block; width: 100%; padding: 14px;
     font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600;
-    text-align: center; text-decoration: none; transition: opacity 0.15s;
+    text-align: center; text-decoration: none; transition: all 0.2s;
     border: 1px solid var(--accent); color: var(--accent); background: none; cursor: pointer;
+    border-radius: 10px;
   }
-  .price-btn:hover { background: var(--accent-light); }
-  .price-card.featured .price-btn { background: #fff; color: var(--accent); border-color: transparent; }
-  .price-card.featured .price-btn:hover { opacity: 0.9; }
+  .price-btn:hover { background: var(--accent); color: #fff; }
+  .price-card.featured .price-btn { background: #fff; color: var(--accent); border-color: transparent; border-radius: 10px; }
+  .price-card.featured .price-btn:hover { background: #f0f5fa; }
 
   /* ─── ABOUT / FAQ ─── */
   .about-grid {
     display: grid; grid-template-columns: 1fr 1fr 1fr;
-    gap: 0; background: var(--rule); border: 1px solid var(--rule); margin-top: 48px;
+    gap: 16px; margin-top: 48px;
   }
 
-  .about-card { background: var(--bg); padding: 32px; }
+  .about-card { background: var(--bg); padding: 32px; border: 1px solid var(--rule); border-radius: 12px; }
   .about-icon { display: block; margin-bottom: 16px; color: var(--mid); }
   .about-title { font-family: 'Geist', sans-serif; font-size: 17px; font-weight: 700; margin-bottom: 10px; }
   .about-body { font-size: 14px; color: var(--mid); line-height: 1.65; }
@@ -571,12 +450,13 @@
     margin-bottom: 10px; display: flex; justify-content: space-between;
     gap: 16px; cursor: pointer; line-height: 1.25;
   }
-  .faq-q-icon { color: var(--accent); font-size: 20px; flex-shrink: 0; font-weight: 300; }
+  .faq-q-icon { color: var(--mid); font-size: 18px; flex-shrink: 0; font-weight: 400; transition: color 0.2s; }
+  .faq-q:hover .faq-q-icon { color: var(--accent); }
   .faq-a { font-size: 14px; color: var(--mid); max-width: 640px; line-height: 1.7; }
 
   /* ─── CTA (founders) ─── */
   .cta-section {
-    background: var(--accent-light); border-top: 1px solid #d8e4f0;
+    background: var(--pale); border-top: 1px solid var(--rule);
     padding: 96px 56px; text-align: center;
   }
   .cta-section h2 { max-width: 540px; margin: 0 auto 12px; }
@@ -586,29 +466,22 @@
   .cta-btn-main {
     background: var(--accent); color: #fff; padding: 15px 32px;
     font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600;
-    text-decoration: none; transition: opacity 0.15s;
+    text-decoration: none; transition: all 0.2s; border-radius: 10px;
   }
-  .cta-btn-main:hover { opacity: 0.85; }
+  .cta-btn-main:hover { background: #15304d; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(26,58,92,0.2); }
   .cta-btn-ghost {
-    border: 1px solid var(--accent); color: var(--accent); padding: 15px 28px;
+    border: 1px solid var(--rule); color: var(--ink); padding: 15px 28px;
     font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 500;
-    text-decoration: none; transition: background 0.15s;
+    text-decoration: none; transition: all 0.2s; border-radius: 10px;
   }
-  .cta-btn-ghost:hover { background: var(--bg); }
+  .cta-btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
   .cta-note { font-size: 13px; color: var(--mid); margin-top: 20px; }
 
   /* ─── ATTORNEYS HERO ─── */
   .a-hero {
     padding: 96px 56px 80px; border-bottom: 1px solid var(--rule);
-    background: var(--accent); position: relative; overflow: hidden;
-  }
-
-  .a-hero-grid {
-    position: absolute; inset: 0;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-    background-size: 48px 48px; pointer-events: none;
+    background: linear-gradient(170deg, var(--accent) 0%, #0f2840 100%);
+    position: relative; overflow: hidden;
   }
 
   .a-hero h1 { color: #fff; }
@@ -616,34 +489,37 @@
   .a-hero .hero-sub { color: rgba(255,255,255,0.65); }
 
   .a-hero .hero-tag {
-    color: rgba(255,255,255,0.5);
-    border-color: rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.7);
+    background: rgba(255,255,255,0.1);
   }
 
   .btn-white {
     background: #fff; color: var(--accent); padding: 14px 28px;
     font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600;
-    text-decoration: none; transition: opacity 0.15s; display: inline-block;
+    text-decoration: none; transition: all 0.2s; display: inline-block;
+    border-radius: 10px;
   }
-  .btn-white:hover { opacity: 0.9; }
+  .btn-white:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
 
   .btn-ghost-white {
-    border: 1px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.8);
+    border: 1px solid rgba(255,255,255,0.25); color: rgba(255,255,255,0.8);
     padding: 14px 24px; font-family: 'Inter', sans-serif;
     font-size: 14px; font-weight: 500;
-    text-decoration: none; transition: all 0.15s; display: inline-block;
+    text-decoration: none; transition: all 0.2s; display: inline-block;
+    border-radius: 10px;
   }
-  .btn-ghost-white:hover { border-color: rgba(255,255,255,0.6); color: #fff; }
+  .btn-ghost-white:hover { border-color: rgba(255,255,255,0.5); color: #fff; background: rgba(255,255,255,0.06); }
 
   /* Attorney hero card */
   .a-hero-card {
     background: rgba(255,255,255,0.07);
     border: 1px solid rgba(255,255,255,0.12); padding: 32px;
+    border-radius: 16px; backdrop-filter: blur(8px);
   }
 
   .a-hero-card-title {
-    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-    color: rgba(255,255,255,0.4); margin-bottom: 24px; font-weight: 600;
+    font-size: 13px; font-weight: 500;
+    color: rgba(255,255,255,0.45); margin-bottom: 24px;
   }
 
   .a-hero-card-item {
@@ -654,7 +530,7 @@
 
   .a-hero-card-icon {
     width: 32px; height: 32px; flex-shrink: 0; margin-top: 1px;
-    background: rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.08); border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
     color: rgba(255,255,255,0.7);
   }
@@ -665,20 +541,18 @@
   /* Attorney features */
   .features-grid {
     display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 0; border: 1px solid var(--rule);
+    gap: 16px;
   }
 
   .feature-card {
-    padding: 36px 32px; border-right: 1px solid var(--rule);
-    border-bottom: 1px solid var(--rule); transition: background 0.15s;
+    padding: 32px; border: 1px solid var(--rule);
+    border-radius: 12px; transition: all 0.2s;
   }
-  .feature-card:hover { background: var(--pale); }
-  .feature-card:nth-child(3n) { border-right: none; }
-  .feature-card:nth-last-child(-n+3) { border-bottom: none; }
+  .feature-card:hover { background: var(--pale); border-color: transparent; box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
 
   .feature-icon {
-    width: 36px; height: 36px; margin-bottom: 20px;
-    background: var(--accent-light);
+    width: 40px; height: 40px; margin-bottom: 20px;
+    background: var(--accent-light); border-radius: 10px;
     display: flex; align-items: center; justify-content: center; color: var(--accent);
   }
 
@@ -693,24 +567,22 @@
 
   .steps-grid {
     display: grid; grid-template-columns: repeat(4, 1fr);
-    gap: 0; border: 1px solid var(--rule); margin-top: 48px;
+    gap: 16px; margin-top: 48px;
   }
 
-  .step-card { padding: 32px 28px; border-right: 1px solid var(--rule); }
-  .step-card:last-child { border-right: none; }
+  .step-card { padding: 28px; border: 1px solid var(--rule); border-radius: 12px; background: var(--bg); }
 
   .step-num {
-    font-family: 'Geist', sans-serif; font-size: 11px; font-weight: 700;
-    letter-spacing: 3px; text-transform: uppercase; color: var(--accent);
+    font-family: 'Geist', sans-serif; font-size: 13px; font-weight: 700;
+    color: var(--accent);
     margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
   }
-  .step-num::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
 
   .step-title { font-family: 'Geist', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 10px; }
   .step-body { font-size: 13px; color: var(--mid); line-height: 1.65; }
 
   /* Attorney pricing box */
-  .pricing-box { border: 1px solid var(--rule); overflow: hidden; margin-top: 48px; }
+  .pricing-box { border: 1px solid var(--rule); overflow: hidden; margin-top: 48px; border-radius: 16px; }
 
   .pricing-box-header {
     background: var(--accent); padding: 28px 36px;
@@ -728,8 +600,8 @@
   .pricing-col:last-child { border-right: none; }
 
   .pricing-col-label {
-    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--mid); margin-bottom: 20px; font-weight: 600;
+    font-size: 12px; font-weight: 600;
+    color: var(--mid); margin-bottom: 20px;
   }
 
   .pricing-row {
@@ -743,7 +615,7 @@
 
   /* Attorney CTA */
   .a-cta-section {
-    background: var(--accent-light); border-top: 1px solid #d8e4f0;
+    background: var(--pale); border-top: 1px solid var(--rule);
     padding: 96px 56px; text-align: center;
   }
   .a-cta-section h2 { max-width: 540px; margin: 0 auto 12px; }
@@ -776,12 +648,9 @@
     .doc-item:nth-child(3n) { border-right: 1px solid var(--rule); }
     .doc-item:nth-child(2n) { border-right: none; }
     .pricing-grid { grid-template-columns: 1fr; }
-    .price-card { border-right: none; border-bottom: 1px solid var(--rule); }
     .about-grid { grid-template-columns: 1fr; }
     .features-grid { grid-template-columns: 1fr 1fr; }
     .steps-grid { grid-template-columns: 1fr 1fr; }
-    .step-card:nth-child(2n) { border-right: none; }
-    .step-card:nth-child(n+3) { border-top: 1px solid var(--rule); }
     .pricing-box-body { grid-template-columns: 1fr; }
     .pricing-col { border-right: none; border-bottom: 1px solid var(--rule); }
     .cta-section, .a-cta-section { padding: 72px 24px; }
@@ -797,25 +666,12 @@
     .nav-right { gap: 10px; }
     .nav-switch-btn { padding: 7px 10px; font-size: 12px; }
     .nav-divider, .nav-btn { display: none; }
+    .features-grid { grid-template-columns: 1fr; }
+    .steps-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
-
-<!-- ═══ SPLASH SCREEN ═══ -->
-<div class="splash" id="splash">
-  <div class="splash-half splash-top"></div>
-  <div class="splash-half splash-bottom"></div>
-  <div class="splash-content" id="splash-content">
-    <div class="splash-title">FNDRY</div>
-    <div class="splash-sub">Build it right</div>
-  </div>
-</div>
-<div class="splash-scroll-hint" id="splash-hint">
-  <span>Scroll</span>
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v10M4 9l4 4 4-4"/></svg>
-</div>
-<div class="splash-spacer" id="splash-spacer"></div>
 
 <!-- ═══ SHARED NAV ═══ -->
 <nav>
@@ -850,16 +706,16 @@
 <div class="page active" id="page-founders">
 
   <div class="f-hero">
-    <div class="f-hero-grid"></div>
     <div class="hero-inner">
       <div>
-        <div class="hero-tag"><span class="hero-tag-dot"></span>Voor Nederlandse founders</div>
+        <div class="hero-tag">Voor Nederlandse founders</div>
         <h1>Hoe de beste<br>startups hun<br><strong>juridische basis regelen.</strong></h1>
         <p class="hero-sub">FNDRY is het enige Nederlandse platform dat founders helpt hun juridisch papierwerk goed te regelen. Doe het met vertrouwen — zodat je terug kunt naar het bouwen van je startup.</p>
         <div class="hero-actions">
           <a href="#prijzen" class="btn-primary">Bekijk de pakketten</a>
           <button class="btn-text" onclick="document.getElementById('oprichting').scrollIntoView({behavior:'smooth'})">Bekijk alle documenten →</button>
         </div>
+        <p style="font-size:13px;color:var(--mid);margin-top:28px;">Opgesteld door ondernemingsrechtadvocaten · Gebruikt door 200+ founders</p>
       </div>
 
       <div class="hero-phases">
@@ -898,11 +754,6 @@
     </div>
   </div>
 
-  <div class="ticker">
-    <div class="ticker-track">
-      <span class="ticker-item">Aandeelhoudersovereenkomst</span><span class="ticker-item">Vesting Schema</span><span class="ticker-item">IP-overdracht</span><span class="ticker-item">NL-SAFE</span><span class="ticker-item">Term Sheet</span><span class="ticker-item">ESOP-regeling</span><span class="ticker-item">Arbeidsovereenkomst</span><span class="ticker-item">Advisor Agreement</span><span class="ticker-item">Due Diligence Checklist</span><span class="ticker-item">Privacy Policy AVG</span><span class="ticker-item">Aandeelhoudersovereenkomst</span><span class="ticker-item">Vesting Schema</span><span class="ticker-item">IP-overdracht</span><span class="ticker-item">NL-SAFE</span><span class="ticker-item">Term Sheet</span><span class="ticker-item">ESOP-regeling</span><span class="ticker-item">Arbeidsovereenkomst</span><span class="ticker-item">Advisor Agreement</span><span class="ticker-item">Due Diligence Checklist</span><span class="ticker-item">Privacy Policy AVG</span>
-    </div>
-  </div>
 
   <div style="border-bottom: 1px solid var(--rule);">
     <div class="stats-bar">
@@ -1081,7 +932,7 @@
   </div>
 
   <footer>
-    <div>© 2025 FNDRY B.V. </div>
+    <div>© 2025 FNDRY B.V.</div>
     <div class="footer-links"><a href="#">Disclaimer</a><a href="#">Privacy</a><a href="#">Contact</a></div>
     <div class="footer-disclaimer">FNDRY B.V. is geen advocatenkantoor en verleent geen juridisch advies over individuele situaties. FNDRY levert juridische documentproducten voor educatieve en zelfredzaamheidsdoeleinden. Raadpleeg een advocaat voor specifiek juridisch advies.</div>
   </footer>
@@ -1095,7 +946,6 @@
 <div class="page" id="page-attorneys">
 
   <div class="a-hero">
-    <div class="a-hero-grid"></div>
     <div class="hero-inner">
       <div>
         <div class="hero-tag">Voor advocaten en juridisch adviseurs</div>
@@ -1229,7 +1079,7 @@
   </div>
 
   <footer>
-    <div>© 2025 FNDRY B.V. · KVK [nummer]</div>
+    <div>© 2025 FNDRY B.V.· KVK [nummer]</div>
     <div class="footer-links"><a href="#">Disclaimer</a><a href="#">Privacy</a><a href="#">Contact</a></div>
     <div class="footer-disclaimer">FNDRY B.V. is geen advocatenkantoor en verleent geen juridisch advies over individuele situaties. FNDRY levert juridische documentproducten voor educatieve en zelfredzaamheidsdoeleinden. Het gebruik van FNDRY door advocaten ontslaat hen niet van hun eigen professionele verantwoordelijkheid jegens hun cliënten.</div>
   </footer>
@@ -1237,59 +1087,7 @@
 </div><!-- end page-attorneys -->
 
 <script>
-  // ─── SPLASH SCROLL ANIMATION ───
-  (function() {
-    const splash = document.getElementById('splash');
-    const splashContent = document.getElementById('splash-content');
-    const splashHint = document.getElementById('splash-hint');
-    const splashSpacer = document.getElementById('splash-spacer');
-    const nav = document.querySelector('nav');
-    const splashTop = splash.querySelector('.splash-top');
-    const splashBottom = splash.querySelector('.splash-bottom');
-
-    function handleSplashScroll() {
-      const scrollY = window.scrollY;
-      const threshold = window.innerHeight * 0.6;
-      const progress = Math.min(scrollY / threshold, 1);
-
-      // Ease out cubic
-      const eased = 1 - Math.pow(1 - progress, 3);
-
-      // Move halves apart
-      const translateAmount = eased * 110; // percentage
-      splashTop.style.transform = 'translateY(-' + translateAmount + '%)';
-      splashBottom.style.transform = 'translateY(' + translateAmount + '%)';
-
-      // Fade and scale the text
-      const textOpacity = Math.max(1 - progress * 2.5, 0);
-      const textScale = 1 - eased * 0.15;
-      splashContent.style.opacity = textOpacity;
-      splashContent.style.transform = 'scale(' + textScale + ')';
-
-      // Show nav as splash disappears, hide when scrolling back
-      if (progress > 0.5) {
-        nav.classList.add('visible');
-      } else {
-        nav.classList.remove('visible');
-      }
-
-      // When fully scrolled past: hide splash
-      // When scrolling back: restore splash
-      if (progress >= 1) {
-        splash.classList.add('done');
-        splashHint.style.display = 'none';
-      } else {
-        splash.classList.remove('done');
-        splashHint.style.display = '';
-        splashHint.style.opacity = Math.max(1 - progress * 4, 0);
-      }
-    }
-
-    window.addEventListener('scroll', handleSplashScroll, { passive: true });
-
-    // Ensure page starts at top
-    window.scrollTo(0, 0);
-  })();
+  // splash removed — nav is always visible now
 
   function animateCountUp() {
     const stats = document.querySelectorAll('.stat-num[data-target]');
